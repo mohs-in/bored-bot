@@ -1,13 +1,27 @@
+import './App.css'
 import { useState } from 'react'
 
-import './App.css'
 
 function App() {
-  const [count, setCount] = useState(0)
+  function getIdea() {
+    fetch("https://www.boredapi.com/api/activity")
+        .then(res => res.json())
+        .then(data => {
+            setIdea(prevIdea => data.activity);
+            setTitle( "🦾 HappyBot🦿" );
+        })
+  }
+
+  const [title, setTitle] = useState(`🤖 BoredBot 🤖`)
+  const [idea, setIdea] = useState(`Find something to do`)
 
   return (
     <>
-      <h1>Welcome to Bored Bot</h1>
+      <main>
+        <h1 id="title">{title}</h1>
+        <p id="idea" aria-live="polite">{idea}</p>
+        <button id="get-activity" aria-label="Find a new activity." onClick={getIdea}>Click Me!</button>
+      </main>
     </>
   )
 }
